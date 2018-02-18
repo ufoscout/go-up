@@ -7,16 +7,16 @@ import (
 	"strings"
 )
 
-type ReplacerDecoratorReader struct {
-	reader                         reader.Reader
-	startDelimiter                 string
-	endDelimiter                   string
-	ignoreUnresolvablePlaceholders bool
+type PlaceholderReplacerDecoratorReader struct {
+	Reader                         reader.Reader
+	StartDelimiter                 string
+	EndDelimiter                   string
+	IgnoreUnresolvablePlaceholders bool
 }
 
-func (f *ReplacerDecoratorReader) Read() (map[string]reader.Property, error) {
+func (f *PlaceholderReplacerDecoratorReader) Read() (map[string]reader.Property, error) {
 
-	result, err := f.reader.Read()
+	result, err := f.Reader.Read()
 
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (f *ReplacerDecoratorReader) Read() (map[string]reader.Property, error) {
 
 			if value.Resolvable {
 
-				tokens := util.AllTokensDistinct(value.Value, f.startDelimiter, f.endDelimiter, true)
+				tokens := util.AllTokensDistinct(value.Value, f.StartDelimiter, f.EndDelimiter, true)
 				if len(tokens) > 0 {
 					valuesToBeReplaced = true
 					valuesToBeReplacedMap[key] = value
@@ -52,8 +52,8 @@ func (f *ReplacerDecoratorReader) Read() (map[string]reader.Property, error) {
 
 					tokenValue, tokenFound := output[token]
 					if tokenFound {
-						if !util.HasTokens(tokenValue.Value, f.startDelimiter, f.endDelimiter) {
-							value.Value = strings.Replace(value.Value, f.startDelimiter+token+f.endDelimiter, tokenValue.Value, -1)
+						if !util.HasTokens(tokenValue.Value, f.StartDelimiter, f.EndDelimiter) {
+							value.Value = strings.Replace(value.Value, f.StartDelimiter+token+f.EndDelimiter, tokenValue.Value, -1)
 							output[key] = value
 							valuesReplacedOnLastLoop = true
 						}
@@ -63,7 +63,7 @@ func (f *ReplacerDecoratorReader) Read() (map[string]reader.Property, error) {
 		}
 	}
 
-	if valuesToBeReplaced && !f.ignoreUnresolvablePlaceholders {
+	if valuesToBeReplaced && !f.IgnoreUnresolvablePlaceholders {
 
 		message := "Unresolvable placeholders: \n";
 		for key, value := range valuesToBeReplacedMap {

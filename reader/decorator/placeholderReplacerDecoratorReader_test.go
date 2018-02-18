@@ -17,7 +17,7 @@ func Test(t *testing.T) {
 
 		ignoreNotResolvable := false;
 
-		decorator := &ReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
+		decorator := &PlaceholderReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
 		output,_ := decorator.Read()
 		assert.NotNil(t, output)
 
@@ -36,7 +36,7 @@ func Test(t *testing.T) {
 		properties.Add("key.two", "value.two")
 
 		ignoreNotResolvable := false;
-		decorator := &ReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
+		decorator := &PlaceholderReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
 		output,_ := decorator.Read()
 
 		assert.NotNil(t, output);
@@ -59,7 +59,7 @@ func Test(t *testing.T) {
 
 		ignoreNotResolvable := false;
 
-		decorator := &ReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
+		decorator := &PlaceholderReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
 		output,err := decorator.Read()
 
 		assert.Nil(t, output)
@@ -81,7 +81,7 @@ func Test(t *testing.T) {
 		properties.Add("key.one", "${key.one}");
 
 		ignoreNotResolvable :=true;
-		decorator := &ReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
+		decorator := &PlaceholderReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
 		output,_ := decorator.Read()
 		assert.NotNil(t, output);
 
@@ -98,7 +98,7 @@ func Test(t *testing.T) {
 		properties.Add("key.two", "${key.one}");
 
 		ignoreNotResolvable :=true;
-		decorator := &ReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
+		decorator := &PlaceholderReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
 		output,_ := decorator.Read()
 		assert.NotNil(t, output);
 
@@ -118,7 +118,7 @@ func Test(t *testing.T) {
 		properties.Add("key.4", "${key.2}");
 
 		ignoreNotResolvable :=false;
-		decorator := &ReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
+		decorator := &PlaceholderReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
 		output,_ := decorator.Read()
 		assert.NotNil(t, output);
 
@@ -140,7 +140,7 @@ func Test(t *testing.T) {
 		properties.Add("key.4", "Hello world!");
 
 		ignoreNotResolvable :=false;
-		decorator := &ReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
+		decorator := &PlaceholderReplacerDecoratorReader{properties, "${", "}", ignoreNotResolvable}
 		output,_ := decorator.Read()
 		assert.NotNil(t, output);
 

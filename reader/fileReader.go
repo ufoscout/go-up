@@ -7,17 +7,17 @@ import (
 )
 
 type FileReader struct {
-	filename string
-	ignoreNotFound bool
+	Filename string
+	IgnoreNotFound bool
 }
 
 func (f *FileReader) Read() (map[string]Property, error) {
 
 	config := map[string]Property{}
 
-	file, err := os.Open(f.filename)
+	file, err := os.Open(f.Filename)
 	if err != nil {
-		if f.ignoreNotFound {
+		if f.IgnoreNotFound {
 			return config, nil
 		} else {
 			return nil, err
