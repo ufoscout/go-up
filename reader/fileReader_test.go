@@ -39,6 +39,21 @@ func Test_ShouldReadProperiesFromFile(t *testing.T) {
 	assert.Equal(t, "second VALUE", prop["keyTwo"].Value);
 }
 
+func Test_ShouldIdentifyValuesWithEqualsInTheValue(t *testing.T) {
+
+	ignoreNotFound := false;
+	filename := "../test/files/test1.properties";
+	var reader Reader = &FileReader{filename, ignoreNotFound}
+	prop, err := reader.Read();
+	assert.NotNil(t, prop)
+	assert.Nil(t, err)
+
+	custom, customFound := prop["key.with_equal"]
+	assert.True(t, customFound)
+	assert.Equal(t, "key=value", custom.Value)
+
+}
+
 func Test_ShouldReadEmptyProperiesFile(t *testing.T) {
 	ignoreNotFound := false;
 	filename := "../test/files/empty.properties";
@@ -48,3 +63,4 @@ func Test_ShouldReadEmptyProperiesFile(t *testing.T) {
 	assert.Nil(t, err)
 	assert.True(t, len(prop) == 0);
 }
+
