@@ -14,6 +14,7 @@ const DEFAULT_END_DELIMITER string = "}"
 const DEFAULT_LIST_SEPARATOR string = ",";
 
 type GoUpBuilder interface {
+	Add(key string, value string) GoUpBuilder
 	AddReader(newReader reader.Reader) GoUpBuilder
 	AddReaderWithPriority(newReader reader.Reader, priority int) GoUpBuilder
 	AddFile(filename string, ignoreNotFound bool) GoUpBuilder
@@ -37,6 +38,10 @@ type goUpBuilderImpl struct {
 	ignoreUnresolvablePlaceholders bool
 }
 
+func (up *goUpBuilderImpl) Add(key string, value string) GoUpBuilder {
+	return up.AddReaderWithPriority(reader.NewProgrammaticReader().Add(key, value), DEFAULT_PRIORITY)
+}
+
 /**
  * Add a new property Reader with the default priority.
  * If two or more Readers have the same priority, the last added has the highest priority among them.
@@ -52,7 +57,7 @@ func (up *goUpBuilderImpl) AddReader(newReader reader.Reader) GoUpBuilder {
  *
  */
 func (up *goUpBuilderImpl) AddReaderWithPriority(newReader reader.Reader, priority int) GoUpBuilder {
-	up.reader.Add(up.reader, priority)
+	up.reader.Add(newReader, priority)
 	return up
 }
 

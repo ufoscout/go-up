@@ -87,3 +87,11 @@ func Test_ShouldTakeIntoAccountInsertionOrderAndPriority(t *testing.T) {
 	assert.Equal(t, "v4-first", prop["k4"].Value);
 	assert.Equal(t, "v5-third", prop["k5"].Value);
 }
+
+func Test_ShouldReturnOsEnv(t *testing.T) {
+	queue := NewPriorityQueueDecoratorReader()
+	queue.Add(&reader.EnvReader{""}, 0)
+	prop, _ := queue.Read();
+	assert.NotNil(t, prop);
+	assert.True(t, len(prop) > 0);
+}
