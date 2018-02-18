@@ -9,7 +9,11 @@ func (f *ProgrammaticReader) Read() (map[string]Property, error) {
 }
 
 func (f *ProgrammaticReader) Add(key string, value string) {
-	f.properties[key] = Property{value, true}
+	f.AddProperty(key, Property{value, true})
+}
+
+func (f *ProgrammaticReader) AddProperty(key string, value Property) {
+	f.properties[key] = value
 }
 
 func NewProgrammaticReader() *ProgrammaticReader {
