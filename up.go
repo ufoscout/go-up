@@ -1,9 +1,11 @@
 package go_up
 
 import (
-	"github.com/ufoscout/go-up/reader"
+	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/ufoscout/go-up/reader"
 	"github.com/ufoscout/go-up/reader/decorator"
 )
 
@@ -11,12 +13,16 @@ type GoUp interface {
 	Exists(key string) bool
 	GetBool(key string) bool
 	GetBoolOrDefault(key string, defaultValue bool) bool
+	GetBoolOrFail(key string) (bool, error)
 	GetFloat64(key string) float64
 	GetFloat64OrDefault(key string, defaultValue float64) float64
+	GetFloat64OrFail(key string) (float64, error)
 	GetInt(key string) int
 	GetIntOrDefault(key string, defaultValue int) int
+	GetIntOrFail(key string) (int, error)
 	GetString(key string) string
 	GetStringOrDefault(key string, defaultValue string) string
+	GetStringOrFail(key string) (string, error)
 }
 
 type goUpImpl struct {
@@ -29,73 +35,87 @@ func (up *goUpImpl) Exists(key string) bool {
 }
 
 func (up *goUpImpl) GetBool(key string) bool {
-	var result bool
-	value, found := up.properties[key]
-	if !found {
-		converted, err := strconv.ParseBool(value.Value)
-		if err==nil {
-			result = converted
-		}
-	}
+	result, _ := up.GetBoolOrFail(key)
 	return result
 }
-
 
 func (up *goUpImpl) GetBoolOrDefault(key string, defaultValue bool) bool {
-	if up.Exists(key) {
-		return up.GetBool(key)
+	result, err := up.GetBoolOrFail(key)
+	if err != nil {
+		result = defaultValue
 	}
-	return defaultValue
+	return result
 }
 
+func (up *goUpImpl) GetBoolOrFail(key string) (bool, error) {
+	var result bool
+	value, errfound := up.GetStringOrFail(key)
+	if errfound == nil {
+		converted, err := strconv.ParseBool(value)
+		if err != nil {
+			return result, err
+		}
+		return converted, nil
+	}
+	return result, errfound
+}
 
 func (up *goUpImpl) GetFloat64(key string) float64 {
-	var result float64
-	value, found := up.properties[key]
-	if !found {
-		converted, err := strconv.ParseFloat(value.Value, 64)
-		if err==nil {
-			result = converted
-		}
-	}
+	result, _ := up.GetFloat64OrFail(key)
 	return result
 }
-
 
 func (up *goUpImpl) GetFloat64OrDefault(key string, defaultValue float64) float64 {
-	if up.Exists(key) {
-		return up.GetFloat64(key)
-	}
-	return defaultValue
-}
-
-
-func (up *goUpImpl) GetInt(key string) int {
-	var result int
-	value, found := up.properties[key]
-	if !found {
-		converted, err := strconv.Atoi(value.Value)
-		if err==nil {
-			result = converted
-		}
+	result, err := up.GetFloat64OrFail(key)
+	if err != nil {
+		result = defaultValue
 	}
 	return result
 }
 
-
-func (up *goUpImpl) GetIntOrDefault(key string, defaultValue int) int {
-	if up.Exists(key) {
-		return up.GetInt(key)
+func (up *goUpImpl) GetFloat64OrFail(key string) (float64, error) {
+	var result float64
+	value, errfound := up.GetStringOrFail(key)
+	if errfound == nil {
+		converted, err := strconv.ParseFloat(value, 64)
+		if err != nil {
+			return result, err
+		}
+		return converted, nil
 	}
-	return defaultValue
+	return result, errfound
 }
 
+func (up *goUpImpl) GetInt(key string) int {
+	result, _ := up.GetIntOrFail(key)
+	return result
+}
+
+func (up *goUpImpl) GetIntOrDefault(key string, defaultValue int) int {
+	result, err := up.GetIntOrFail(key)
+	if err != nil {
+		result = defaultValue
+	}
+	return result
+}
+
+func (up *goUpImpl) GetIntOrFail(key string) (int, error) {
+	var result int
+	value, errfound := up.GetStringOrFail(key)
+	if errfound == nil {
+		converted, err := strconv.Atoi(value)
+		if err != nil {
+			return result, err
+		}
+		return converted, nil
+	}
+	return result, errfound
+}
 
 func (up *goUpImpl) GetString(key string) string {
 	value, _ := up.properties[key]
 	return value.Value
 }
-
 
 func (up *goUpImpl) GetStringOrDefault(key string, defaultValue string) string {
 	if up.Exists(key) {
@@ -104,6 +124,14 @@ func (up *goUpImpl) GetStringOrDefault(key string, defaultValue string) string {
 	return defaultValue
 }
 
+func (up *goUpImpl) GetStringOrFail(key string) (string, error) {
+	var result string
+	value, found := up.properties[key]
+	if found {
+		return value.Value, nil
+	}
+	return result, fmt.Errorf("Key [%s] not found", key)
+}
 
 func (up *goUpImpl) GetStringSlice(key string, separator string) []string {
 	return strings.Split(up.GetString(key), separator)
