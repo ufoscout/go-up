@@ -23,6 +23,9 @@ type GoUp interface {
 	GetString(key string) string
 	GetStringOrDefault(key string, defaultValue string) string
 	GetStringOrFail(key string) (string, error)
+	GetStringSlice(key string, separator string) []string
+	GetStringSliceOrDefault(key string, separator string, defaultValue []string) []string
+	GetStringSliceOrFail(key string, separator string) ([]string, error)
 }
 
 type goUpImpl struct {
@@ -134,7 +137,27 @@ func (up *goUpImpl) GetStringOrFail(key string) (string, error) {
 }
 
 func (up *goUpImpl) GetStringSlice(key string, separator string) []string {
-	return strings.Split(up.GetString(key), separator)
+	result, err := up.GetStringSliceOrFail(key, separator);
+	if err!=nil {
+		return []string{}
+	}
+	return result
+}
+
+func (up *goUpImpl) GetStringSliceOrDefault(key string, separator string, defaultValue []string) []string {
+	result, err := up.GetStringSliceOrFail(key, separator);
+	if err!=nil {
+		return defaultValue
+	}
+	return result
+}
+
+func (up *goUpImpl) GetStringSliceOrFail(key string, separator string) ([]string, error) {
+	result, err := up.GetStringOrFail(key);
+	if err!=nil {
+		return nil, err
+	}
+	return strings.Split(result, separator), nil
 }
 
 func NewEnvReader(prefix string, toLower bool, underscoreToDot bool) reader.Reader {

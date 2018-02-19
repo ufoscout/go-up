@@ -183,54 +183,17 @@ func Test_ShouldReturnDefaultWhenParsingWrongFloat(t *testing.T) {
 
 }
 
-/*
-
 
 func Test_ShouldReturnValueToArray(t *testing.T) {
-final Map<String, String> properties = new HashMap<>(t *testing.T);
+	properties := NewGoUp()
+	properties.Add("key.one", "111,AAAAA,BBB");
 
-properties.Add("key.one", "111,AAAAA,BBB");
+	prop,_ := properties.build()
 
-prop,_ := properties.build()
-
-final String[] values = prop.getArray("key.one");
-assert.Equal(t, 3, values.length);
-assert.Equal(t, "111", values[0]);
-assert.Equal(t, "AAAAA", values[1]);
-assert.Equal(t, "BBB", values[2]);
-assert.Equal(t, 0, prop.getArray("key.three").length);
+	values := prop.GetStringSlice("key.one", ",");
+	assert.Equal(t, 3, len(values));
+	assert.Equal(t, "111", values[0]);
+	assert.Equal(t, "AAAAA", values[1]);
+	assert.Equal(t, "BBB", values[2]);
+	assert.Equal(t, 0, len(prop.GetStringSlice("key.three", ",")));
 }
-
-
-func Test_ShouldReturnValueToList(t *testing.T) {
-final Map<String, String> properties = new HashMap<>(t *testing.T);
-
-properties.Add("key.one", "111,AAAAA,BBB");
-
-prop,_ := properties.build()
-
-final List<String> values = prop.getList("key.one");
-assert.Equal(t, 3, values.size());
-assert.Equal(t, "111", values.get(0));
-assert.Equal(t, "AAAAA", values.get(1));
-assert.Equal(t, "BBB", values.get(2));
-assert.Equal(t, 0, prop.getList("key.three").size());
-}
-
-
-func Test_ShouldReturnValueToListOfCustomObjects(t *testing.T) {
-properties := NewGoUp()
-
-properties.Add("key.one", "111,222,333");
-
-prop,_ := properties.build()
-
-final List<Integer> values = prop.getList("key.one", Integer::valueOf);
-assert.Equal(t, 3, values.size());
-assert.Equal(t, 111, values.get(0).intValue());
-assert.Equal(t, 222, values.get(1).intValue());
-assert.Equal(t, 333, values.get(2).intValue());
-assert.Equal(t, 0, prop.getList("key.three", Integer::valueOf).size());
-}
-
-*/
