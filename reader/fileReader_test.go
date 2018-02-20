@@ -64,3 +64,29 @@ func Test_ShouldReadEmptyProperiesFile(t *testing.T) {
 	assert.True(t, len(prop) == 0);
 }
 
+func Test_ShouldIgnoreCommentsOnProperiesFile(t *testing.T) {
+	ignoreNotFound := false;
+	filename := "../test/files/test1.properties";
+	var reader Reader = &FileReader{filename, ignoreNotFound}
+	prop, err := reader.Read();
+	assert.NotNil(t, prop)
+	assert.Nil(t, err)
+
+	_, found := prop["#this is a comment"]
+	assert.False(t, found);
+
+	_, found = prop["# this is a comment too"]
+	assert.False(t, found);
+
+	_, found = prop["### this is a comment too"]
+	assert.False(t, found);
+
+	value, found := prop["this.is.not.a.comment"]
+	assert.True(t, found);
+	assert.Equal(t, "#", value.Value)
+
+	value, found = prop["this.is.#.not.a.comment"]
+	assert.True(t, found);
+	assert.Equal(t, "value##", value.Value)
+}
+

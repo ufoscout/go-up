@@ -31,11 +31,13 @@ func (f *FileReader) Read() (map[string]Property, error) {
 		line := scanner.Text()
 		if equal := strings.Index(line, "="); equal >= 0 {
 			if key := strings.TrimSpace(line[:equal]); len(key) > 0 {
-				value := ""
-				if len(line) > equal {
-					value = strings.TrimSpace(line[equal+1:])
+				if !keyToBeIgnored(key) {
+					value := ""
+					if len(line) > equal {
+						value = strings.TrimSpace(line[equal+1:])
+					}
+					config[key] = Property{value, true}
 				}
-				config[key] = Property{value, true}
 			}
 		}
 	}
@@ -45,4 +47,8 @@ func (f *FileReader) Read() (map[string]Property, error) {
 	}
 
 	return config, nil
+}
+
+func keyToBeIgnored(key string) bool {
+	return strings.HasPrefix(key, "#")
 }
