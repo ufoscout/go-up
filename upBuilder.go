@@ -1,8 +1,8 @@
 package go_up
 
 import (
-	"github.com/ufoscout/go-up/reader/decorator"
 	"github.com/ufoscout/go-up/reader"
+	"github.com/ufoscout/go-up/reader/decorator"
 )
 
 const HIGHEST_PRIORITY int = 0
@@ -11,7 +11,7 @@ const DEFAULT_PRIORITY int = 100
 const DEFAULT_START_DELIMITER string = "${"
 const DEFAULT_END_DELIMITER string = "}"
 
-const DEFAULT_LIST_SEPARATOR string = ",";
+const DEFAULT_LIST_SEPARATOR string = ","
 
 type GoUpBuilder interface {
 	Add(key string, value string) GoUpBuilder
@@ -21,7 +21,7 @@ type GoUpBuilder interface {
 	AddFileWithPriority(filename string, ignoreNotFound bool, priority int) GoUpBuilder
 	Delimiters(startDelimiter string, endDelimiter string) GoUpBuilder
 	IgnoreUnresolvablePlaceholders(ignoreUnresolvablePlaceholders bool) GoUpBuilder
-	build() (GoUp, error)
+	Build() (GoUp, error)
 }
 
 func NewGoUp() GoUpBuilder {
@@ -97,13 +97,13 @@ func (up *goUpBuilderImpl) IgnoreUnresolvablePlaceholders(ignoreUnresolvablePlac
 	return up
 }
 
-func (up *goUpBuilderImpl) build() (GoUp, error) {
+func (up *goUpBuilderImpl) Build() (GoUp, error) {
 
-	replacer := decorator.PlaceholderReplacerDecoratorReader{up.reader, up.startDelimiter,up.endDelimiter, up.ignoreUnresolvablePlaceholders}
+	replacer := decorator.PlaceholderReplacerDecoratorReader{up.reader, up.startDelimiter, up.endDelimiter, up.ignoreUnresolvablePlaceholders}
 
 	properties, err := replacer.Read()
 
-	if err!=nil {
+	if err != nil {
 		return nil, err
 	}
 
