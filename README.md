@@ -21,7 +21,7 @@ import (
 )
 ```
 
-For Java:
+In your Gopkg.toml file (if you are using [dep](https://github.com/golang/dep), if not, you should):
 ```Toml
 # Use latest release of go-up
 [[constraint]]
@@ -59,7 +59,7 @@ up, err := NewGoUp().
 ```Go
 port := up.GetIntOrDefault("server.port", 8080); // returns 9090
 serverUrl := up.GetString("server.url") // returns http://127.0.0.1:9090/
-defaultVal := up.GetString("unknown_Key", "defaultValue") // returns defaultValue
+defaultVal := up.GetStringOrDefault("unknown_Key", "defaultValue") // returns defaultValue
 ```
 
 
@@ -114,7 +114,7 @@ up, err := go_up.NewGoUp().
 
 Readers priority -> Last one wins
 ---------------------------------
-Properties defined in later readers will override properties defined earlier readers, in case of overlapping keys.
+Properties defined in later readers will override properties defined in earlier readers, in case of overlapping keys.
 Hence, make sure that the most specific readers are the last ones in the given list of locations.
 
 For example:
@@ -141,7 +141,7 @@ fmt.Println(up.GetString("server.url"))
 
 ```
 
-BTW, due to the fact that we used go_up.NewEnvReader(...)` as last reader, if the "server.url" if an Environment variable called "server.url" is found at runtime, it will override the other values.
+BTW, due to the fact that we used go_up.NewEnvReader(...)` as last reader, if at runtime an Environment variable called "server.url" is found, it will override the other values.
 
 Finally, it is possible to specify a custom priority:
 
@@ -172,9 +172,12 @@ Built in support for environment variables is provided through the EnvReader str
 os.Setenv("KEY_FROM_ENV", "ValueFromEnv")
 os.Setenv("CUSTOM_PREFIX_KEY_FROM_ENV", "ValueFromEnv_WithCustomPrefix")
 
-prefix := "CUSTOM_PREFIX_" // Only variables that have this prefix are loaded. The prefix is removed at runtime.
-toLowerCase := true // if true, the Env variable key is converted to lower case
-underscoreToDot := true // if true, the underscores "_" of the env variable key are replaced by dots "."
+// Loads only variables with this prefix. The prefix is removed at runtime.
+prefix := "CUSTOM_PREFIX_" 
+// if true, the Env variable key is converted to lower case
+toLowerCase := true 
+// if true, the underscores "_" of the env variable key are replaced by dots "."
+underscoreToDot := true 
 
 up, err := go_up.NewGoUp().
  AddReader(go_up.NewEnvReader(prefix, toLowerCase, underscoreToDot)). // Loading environment variables
@@ -192,10 +195,11 @@ A typical real life configuration would look like:
 ```Go
 up, err := go_up.NewGoUp().
 
- // Load the Environment variables as they are if you use them in they default format, e.g. ENV_VARIABLE=XXX
+ // Load the Environment variables.
+ // The are used as they are defined, e.g. ENV_VARIABLE=XXX
  AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", false, false), go_up.HIGHEST_PRIORITY).
 
- // load the Environment variables and convert their keys
+ // Load the Environment variables and convert their keys
  // from ENV_VARIABLE=XXX to env.variable=XXX
  // This could be desired to override default properties
  AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", true, true), go_up.HIGHEST_PRIORITY).
@@ -227,7 +231,7 @@ up, err := go_up.NewGoUp().
  Build()
 
 // get a String. The empty string value is returned if the key is not found
-aString := up.GetStringOrDefault("key", "defaultValue")
+aString := up.GetString("key")
 
 // get a String. "defaultValue" is returned if the key is not found
 aStringOrDefault := up.GetStringOrDefault("key", "defaultValue")
