@@ -279,7 +279,11 @@ type GoUp interface {
 ```
 
 # Rationale
-Before Go-Up, I used to use [Viper](https://github.com/spf13/viper). It is great, it has tons of features and it supports multiple file types by default; nevertheless, all of this is not for free. If like me you aspire to make your code as light as possible, then Viper is not an option as it adds tons of transitive dependencies that make the application much heavier.
+Before Go-Up, I used to use [Viper](https://github.com/spf13/viper). It is great, it has tons of features and it supports multiple file types by default. 
+
+Nevertheless, all of this is not for free. 
+
+If like me you aspire to code which is as light as possible, then Viper is not an option as it adds tons of dependencies that make the application much heavier.
 
 To show the impact that a single library can have on your application, I created three small examples (check them in the "examples" folder), these are:
 
@@ -295,6 +299,6 @@ When built, the three examples produce surprising results:
 | Go-Up         |             2.100 KB |
 | Viper         |            10.500 KB |
 
-(Build performed with go1.10 linux/amd64 on Ubuntu 16.04)
+<ins>The Viper based binary file is 5 times bigger than the other implementations!</ins>
 
-__The Viper based binary file is 5 times bigger than the other implementations!__
+(Build performed with go1.10 linux/amd64 on Ubuntu 16.04)
