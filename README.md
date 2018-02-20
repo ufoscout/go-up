@@ -5,8 +5,13 @@ go-up provides a simple way to configure an application from multiple sources â€
 Some features:
 
 - Recursive placeholders resolution
-- Less than 10Kb and no external dependencies
+- Less than 10Kb 
+- No external dependencies
 - Modular and extensible architecture
+
+This library was started after the considerable disappointment I had when I noticed that the configuration library used by my application increased the binary file size from 3MB to 11MB!!! (See the [Rationale](#rationale) section below for detailed info)
+
+Go-Up is written to be lightweight and will always remain lean and straightforward.
 
 
 Getting Started
@@ -272,3 +277,24 @@ type GoUp interface {
 
 }
 ```
+
+# Rationale
+Before Go-Up, I used to use [Viper](https://github.com/spf13/viper). It is great, it has tons of features and it supports multiple file types by default; nevertheless, all of this is not for free. If like me you aspire to make your code as light as possible, then Viper is not an option as it adds tons of transitive dependencies that make the application much heavier.
+
+To show the impact that a single library can have on your application, I created three small examples (check them in the "examples" folder), these are:
+
+- *plain* : a Go application that prints "Hello World"
+- *goup* : a Go that, using **go-up**, reads "Hello World" from a config file and prints it
+- *viper* : a Go that, using **viper**, reads "Hello World" from a config file and prints it
+
+When built, the three examples produce surprising results:
+
+| Library       | Produced Binary Size |
+| ------------- |---------------------:|
+| Plain Go      |             2.050 KB |
+| Go-Up         |             2.100 KB |
+| Viper         |            10.500 KB |
+
+(Build performed with go1.10 linux/amd64 on Ubuntu 16.04)
+
+__The Viper based binary file is 5 times bigger than the other implementations!__
