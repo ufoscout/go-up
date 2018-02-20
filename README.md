@@ -131,8 +131,8 @@ fileTwo.properties:
 
 ```Go
 up, err := go_up.NewGoUp().
- AddFile("./fileOne.properties"). 
- AddFile("./fileTwo.properties").
+ AddFile("./fileOne.properties", false). 
+ AddFile("./fileTwo.properties", false).
  AddReader(go_up.NewEnvReader("", false, false)). // Loading environment variables
  Build()
 
