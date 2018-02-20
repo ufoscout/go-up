@@ -279,24 +279,23 @@ type GoUp interface {
 ```
 
 # Rationale
-Before Go-Up, I used to use [Viper](https://github.com/spf13/viper). It is great, it has tons of features and it supports multiple file types by default. 
+Before Go-Up, I used to use [Viper](https://github.com/spf13/viper). 
+Viper is great and I surely recommend it; nevertheless, all of its features are not for free. In fact, it adds tons of dependencies that make the application much heavier.
 
-Nevertheless, all of this is not for free. 
-
-If like me you aspire to code which is as light as possible, then Viper is not an option as it adds tons of dependencies that make the application much heavier.
+So, if like me you aspire to code which is as light as possible and you can live with a smaller set of features (BWT go-up has some unique aces in the hole like recursive placeholders resolution!), then you should probably take into account a lighter alternative like go-up.
 
 To show the impact that a single library can have on your application, I created three small examples (check them in the "examples" folder), these are:
 
 - *plain* : a Go application that prints "Hello World"
-- *goup* : a Go that, using **go-up**, reads "Hello World" from a config file and prints it
-- *viper* : a Go that, using **viper**, reads "Hello World" from a config file and prints it
+- *goup* : a Go application that, using **go-up**, reads "Hello World" from a config file and prints it
+- *viper* : a Go application that, using **viper**, reads "Hello World" from a config file and prints it
 
-When built, the three examples produce surprising results:
+When built, they produce surprising results:
 
 | Library       | Produced Binary Size |
 | ------------- |---------------------:|
 | Plain Go      |             2.050 KB |
-| Go-Up         |             2.100 KB |
+| Go-Up         |             2.200 KB |
 | Viper         |            10.500 KB |
 
 <ins>The Viper based binary file is 5 times bigger than the other implementations!</ins>
