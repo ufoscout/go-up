@@ -11,6 +11,7 @@ const DEFAULT_PRIORITY int = 100
 const DEFAULT_START_DELIMITER string = "${"
 const DEFAULT_END_DELIMITER string = "}"
 
+const DEFAULT_DEFAULT_VALUE_SEPARATOR string = ":"
 const DEFAULT_LIST_SEPARATOR string = ","
 
 type GoUpBuilder interface {
@@ -20,6 +21,7 @@ type GoUpBuilder interface {
 	AddFile(filename string, ignoreNotFound bool) GoUpBuilder
 	AddFileWithPriority(filename string, ignoreNotFound bool, priority int) GoUpBuilder
 	Delimiters(startDelimiter string, endDelimiter string) GoUpBuilder
+	DefaultValueSeparator(defaultValueSeparator string) GoUpBuilder
 	IgnoreUnresolvablePlaceholders(ignoreUnresolvablePlaceholders bool) GoUpBuilder
 	Build() (GoUp, error)
 }
@@ -28,6 +30,7 @@ func NewGoUp() GoUpBuilder {
 	return &goUpBuilderImpl{decorator.NewPriorityQueueDecoratorReader(),
 		DEFAULT_START_DELIMITER,
 		DEFAULT_END_DELIMITER,
+		DEFAULT_DEFAULT_VALUE_SEPARATOR,
 		false}
 }
 
@@ -35,6 +38,7 @@ type goUpBuilderImpl struct {
 	reader                         *decorator.PriorityQueueDecoratorReader
 	startDelimiter                 string
 	endDelimiter                   string
+	defaultValueSeparator          string
 	ignoreUnresolvablePlaceholders bool
 }
 
@@ -89,6 +93,16 @@ func (up *goUpBuilderImpl) Delimiters(startDelimiter string, endDelimiter string
 }
 
 /**
+ *
+ * Set the separator for the default value.
+ * Default is ':'
+ */
+func (up *goUpBuilderImpl) DefaultValueSeparator(defaultValueSeparator string) GoUpBuilder {
+	up.defaultValueSeparator = defaultValueSeparator
+	return up
+}
+
+/**
  * Whether to ignore not resolvable placeholders.
  * Default is false.
  */
@@ -99,7 +113,12 @@ func (up *goUpBuilderImpl) IgnoreUnresolvablePlaceholders(ignoreUnresolvablePlac
 
 func (up *goUpBuilderImpl) Build() (GoUp, error) {
 
-	replacer := decorator.PlaceholderReplacerDecoratorReader{up.reader, up.startDelimiter, up.endDelimiter, up.ignoreUnresolvablePlaceholders}
+	replacer := decorator.PlaceholderReplacerDecoratorReader{
+		up.reader,
+		up.startDelimiter,
+		up.endDelimiter,
+		up.defaultValueSeparator,
+		up.ignoreUnresolvablePlaceholders}
 
 	properties, err := replacer.Read()
 

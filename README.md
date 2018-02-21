@@ -87,17 +87,18 @@ For example:
 
 fileOne.properties:
 ```properties
-    server.url=http://${${environment}.server.host}:${server.port}
-    server.port=8080
+server.url=http://${${environment}.server.host}:${server.port}
+server.port=8080
 ```
 
 fileTwo.properties:
 ```properties
-    environment=PROD
-    PROD.server.host=10.10.10.10
-    DEV.server.host=127.0.0.1
+environment=PROD
+PROD.server.host=10.10.10.10
+DEV.server.host=127.0.0.1
 ```
 
+Go code:
 ```Go
 up, err := go_up.NewGoUp().
  AddFile("./fileOne.properties", false).
@@ -116,6 +117,32 @@ up, err := go_up.NewGoUp().
  Build()
 ```
 
+Default Values
+--------------
+Placeholders can have default values which are used if the key is not otherwise provided. Example:
+
+config.properties:
+```properties
+# the default value "8080" is used if 'PORT_NUMBER' is not provided
+server.port=${PORT_NUMBER:8080}
+    
+# default is 127.0.0.1
+server.ip=${IP:127.0.0.1}
+
+server.url=${server.ip}/${server.port}
+```
+
+Go code:
+```Go
+up, err := go_up.NewGoUp().
+ AddFile("./config.properties", false).
+ Build()
+
+// this prints 'http://127.0.0.1:8080'
+fmt.Println(up.GetString("server.url")) 
+```
+
+The default separator for the default value is ":". A custom value can be set through the 'DefaultValueSeparator()' method of the GoUpBuilder.
 
 Readers priority -> Last one wins
 ---------------------------------
@@ -126,12 +153,12 @@ For example:
 
 fileOne.properties:
 ```properties
-    server.url=urlFromOne
+server.url=urlFromOne
 ```
 
 fileTwo.properties:
 ```properties
-    server.url=urlFromTwo
+server.url=urlFromTwo
 ```
 
 ```Go
