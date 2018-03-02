@@ -305,6 +305,10 @@ type GoUp interface {
 }
 ```
 
+GoDoc
+-----
+See (https://godoc.org/github.com/ufoscout/go-up)[https://godoc.org/github.com/ufoscout/go-up]
+
 # Rationale
 Before Go-Up, I used to use [Viper](https://github.com/spf13/viper). 
 Viper is great and I surely recommend it; nevertheless, all of its features are not for free. In fact, it adds tons of dependencies that make the application much heavier.
