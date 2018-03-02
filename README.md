@@ -307,7 +307,7 @@ type GoUp interface {
 
 GoDoc
 -----
-See (https://godoc.org/github.com/ufoscout/go-up)[https://godoc.org/github.com/ufoscout/go-up]
+See [https://godoc.org/github.com/ufoscout/go-up](https://godoc.org/github.com/ufoscout/go-up)
 
 # Rationale
 Before Go-Up, I used to use [Viper](https://github.com/spf13/viper). 
