@@ -15,4 +15,4 @@ before_install:
 install:
   - dep ensure
 
-script: dep ensure && go test ./...
+script: go test ./... && go build
