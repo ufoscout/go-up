@@ -1,6 +1,7 @@
 # go-up! A simple configuration library with placeholders resolution and no magic.
 
 [![Build Status](https://travis-ci.org/ufoscout/go-up.svg?branch=master)](https://travis-ci.org/ufoscout/go-up)
+[![codecov](https://codecov.io/gh/ufoscout/go-up/branch/master/graph/badge.svg)](https://codecov.io/gh/ufoscout/go-up)
 
 go-up provides a simple way to configure an application from multiple sources — built in resources, property files, environment variables, and whatever else you like.
 
