@@ -17,7 +17,7 @@ install:
   - dep ensure
 
 script: 
-  - go test -race -coverprofile=coverage.txt -covermode=atomic
+  - ./go-test-coverage.sh
   - go build
 
 after_success:
