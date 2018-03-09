@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// EnvReader creates properties from the environment variables
 type EnvReader struct {
 	Prefix string
 }

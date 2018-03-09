@@ -1,12 +1,15 @@
 package decorator
 
 import (
-	"github.com/ufoscout/go-up/reader"
 	"strings"
+
+	"github.com/ufoscout/go-up/reader"
 )
 
+// KeyStringReplacerDecoratorReader a decorator that perfoms string substitution in
+// a property value
 type KeyStringReplacerDecoratorReader struct {
-	Reader reader.Reader
+	Reader    reader.Reader
 	OldString string
 	NewString string
 }

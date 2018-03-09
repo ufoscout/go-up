@@ -5,15 +5,25 @@ import (
 	"github.com/ufoscout/go-up/reader/decorator"
 )
 
-const HIGHEST_PRIORITY int = 0
-const DEFAULT_PRIORITY int = 100
+// HighestPriority the highest priority
+const HighestPriority int = 0
 
-const DEFAULT_START_DELIMITER string = "${"
-const DEFAULT_END_DELIMITER string = "}"
+// DefaultPriority the default priority
+const DefaultPriority int = 100
 
-const DEFAULT_DEFAULT_VALUE_SEPARATOR string = ":"
-const DEFAULT_LIST_SEPARATOR string = ","
+// DefaultStartDelimiter the default placeholder start delimiter
+const DefaultStartDelimiter string = "${"
 
+// DefaultEndDelimiter the default placeholder end delimiter
+const DefaultEndDelimiter string = "}"
+
+// DefaultValueSeparator the default separator for a placeholder default value
+const DefaultValueSeparator string = ":"
+
+// DefaultListSeparator default list separator
+const DefaultListSeparator string = ","
+
+// GoUpBuilder the GoUp builder
 type GoUpBuilder interface {
 	Add(key string, value string) GoUpBuilder
 	AddReader(newReader reader.Reader) GoUpBuilder
@@ -26,11 +36,12 @@ type GoUpBuilder interface {
 	Build() (GoUp, error)
 }
 
+// NewGoUp creates a new GoUpBuilder
 func NewGoUp() GoUpBuilder {
 	return &goUpBuilderImpl{decorator.NewPriorityQueueDecoratorReader(),
-		DEFAULT_START_DELIMITER,
-		DEFAULT_END_DELIMITER,
-		DEFAULT_DEFAULT_VALUE_SEPARATOR,
+		DefaultStartDelimiter,
+		DefaultEndDelimiter,
+		DefaultValueSeparator,
 		false}
 }
 
@@ -43,7 +54,7 @@ type goUpBuilderImpl struct {
 }
 
 func (up *goUpBuilderImpl) Add(key string, value string) GoUpBuilder {
-	return up.AddReaderWithPriority(reader.NewProgrammaticReader().Add(key, value), DEFAULT_PRIORITY)
+	return up.AddReaderWithPriority(reader.NewProgrammaticReader().Add(key, value), DefaultPriority)
 }
 
 /**
@@ -52,7 +63,7 @@ func (up *goUpBuilderImpl) Add(key string, value string) GoUpBuilder {
  *
  */
 func (up *goUpBuilderImpl) AddReader(newReader reader.Reader) GoUpBuilder {
-	return up.AddReaderWithPriority(newReader, DEFAULT_PRIORITY)
+	return up.AddReaderWithPriority(newReader, DefaultPriority)
 }
 
 /**
@@ -70,7 +81,7 @@ func (up *goUpBuilderImpl) AddReaderWithPriority(newReader reader.Reader, priori
  * If two or more Readers have the same priority, the last added has the highest priority among them.
  */
 func (up *goUpBuilderImpl) AddFile(filename string, ignoreNotFound bool) GoUpBuilder {
-	return up.AddFileWithPriority(filename, ignoreNotFound, DEFAULT_PRIORITY)
+	return up.AddFileWithPriority(filename, ignoreNotFound, DefaultPriority)
 }
 
 /**

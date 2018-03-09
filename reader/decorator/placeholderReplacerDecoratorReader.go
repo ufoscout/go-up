@@ -8,6 +8,7 @@ import (
 	"github.com/ufoscout/go-up/util"
 )
 
+// PlaceholderReplacerDecoratorReader a decorator that resolves property placeholders
 type PlaceholderReplacerDecoratorReader struct {
 	Reader                         reader.Reader
 	StartDelimiter                 string

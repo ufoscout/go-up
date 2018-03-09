@@ -184,7 +184,7 @@ Finally, it is possible to specify a custom priority:
 up, err := go_up.NewGoUp().
 
  // load the properties from the file system and specify their priority
- AddFileWithPriority("./fileOne.properties", false, go_up.HIGHEST_PRIORITY).
+ AddFileWithPriority("./fileOne.properties", false, go_up.HighestPriority).
 
  AddFile("./fileTwo.properties", false). // loads file with default priority
  AddReader(go_up.NewEnvReader("", false, false)). // Loads environment variables
@@ -232,12 +232,12 @@ up, err := go_up.NewGoUp().
 
  // Load the Environment variables.
  // The are used as they are defined, e.g. ENV_VARIABLE=XXX
- AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", false, false), go_up.HIGHEST_PRIORITY).
+ AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", false, false), go_up.HighestPriority).
 
  // Load the Environment variables and convert their keys
  // from ENV_VARIABLE=XXX to env.variable=XXX
  // This could be desired to override default properties
- AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", true, true), go_up.HIGHEST_PRIORITY).
+ AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", true, true), go_up.HighestPriority).
 
  // load a file
  AddFile("./default.properties", false).

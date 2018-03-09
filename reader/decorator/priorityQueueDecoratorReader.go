@@ -1,19 +1,15 @@
 package decorator
 
 import (
-	"github.com/ufoscout/go-up/reader"
 	"sort"
+
+	"github.com/ufoscout/go-up/reader"
 )
 
-/**
- * A Reader that wraps a prioritized list of other Readers.
- * Each Reader in the list has a priority that is used to resolve conflicts
- * when a key is defined more than once.
- * If two or more Readers have the same priority, the one added by last has the highest priority
- *
- * @author Francesco Cina
- *
- */
+// PriorityQueueDecoratorReader A Reader that wraps a prioritized list of other Readers.
+// Each Reader in the list has a priority that is used to resolve conflicts
+// when a key is defined more than once.
+// If two or more Readers have the same priority, the one added by last has the highest priority
 type PriorityQueueDecoratorReader struct {
 	ReadersMap map[int][]reader.Reader
 }
@@ -29,18 +25,18 @@ func (f *PriorityQueueDecoratorReader) Read() (map[string]reader.Property, error
 	}
 	sort.Ints(keys)
 
-	for i := len(keys)-1; i >= 0; i-- {
+	for i := len(keys) - 1; i >= 0; i-- {
 		key := keys[i]
 		value := f.ReadersMap[key]
 		for _, readers := range value {
 
 			properties, err := readers.Read()
 
-			if err!=nil {
+			if err != nil {
 				return nil, err
 			}
 
-			for k,v := range properties {
+			for k, v := range properties {
 				output[k] = v
 			}
 		}
@@ -49,6 +45,7 @@ func (f *PriorityQueueDecoratorReader) Read() (map[string]reader.Property, error
 
 }
 
+// Add adds a new Reader
 func (f *PriorityQueueDecoratorReader) Add(newReader reader.Reader, priority int) *PriorityQueueDecoratorReader {
 	readers, found := f.ReadersMap[priority]
 	if !found {
@@ -60,6 +57,7 @@ func (f *PriorityQueueDecoratorReader) Add(newReader reader.Reader, priority int
 	return f
 }
 
+// NewPriorityQueueDecoratorReader creats a new PriorityQueueDecoratorReader instance
 func NewPriorityQueueDecoratorReader() *PriorityQueueDecoratorReader {
 	return &PriorityQueueDecoratorReader{map[int][]reader.Reader{}}
 }

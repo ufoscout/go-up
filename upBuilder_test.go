@@ -79,7 +79,7 @@ func Test_shouldConsiderFileAddPriority(t *testing.T) {
 func Test_shouldBePossibleToSetCustomPriority(t *testing.T) {
 
 	up, _ := NewGoUp().
-		AddReaderWithPriority(reader.NewProgrammaticReader().Add("one", "high"), HIGHEST_PRIORITY).
+		AddReaderWithPriority(reader.NewProgrammaticReader().Add("one", "high"), HighestPriority).
 		AddReader(reader.NewProgrammaticReader().Add("one", "default")).
 		Build()
 	assert.Equal(t, "high", up.GetString("one"))

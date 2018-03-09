@@ -1,13 +1,14 @@
 package reader
 
 import (
-	"os"
 	"bufio"
+	"os"
 	"strings"
 )
 
+// FileReader reads properties from a file
 type FileReader struct {
-	Filename string
+	Filename       string
 	IgnoreNotFound bool
 }
 
@@ -19,12 +20,10 @@ func (f *FileReader) Read() (map[string]Property, error) {
 	if err != nil {
 		if f.IgnoreNotFound {
 			return config, nil
-		} else {
-			return nil, err
 		}
+		return nil, err
 	}
 	defer file.Close()
-
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {

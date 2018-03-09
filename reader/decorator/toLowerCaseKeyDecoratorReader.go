@@ -1,10 +1,12 @@
 package decorator
 
 import (
-	"github.com/ufoscout/go-up/reader"
 	"strings"
+
+	"github.com/ufoscout/go-up/reader"
 )
 
+// ToLowerCaseKeyDecoratorReader transforms all property keys to lowercase
 type ToLowerCaseKeyDecoratorReader struct {
 	Reader reader.Reader
 }
