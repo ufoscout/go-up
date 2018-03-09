@@ -35,7 +35,7 @@ In your Gopkg.toml file (if you are using [dep](https://github.com/golang/dep), 
 # Use latest release of go-up
 [[constraint]]
   name = "github.com/ufoscout/go-up"
-  version = "0.3.0"
+  version = "0.4.0"
 ```
 
 2. Define some properties. You can use placeholders, for example, in `config.properties`:
