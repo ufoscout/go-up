@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ufoscout/go-up.svg?branch=master)](https://travis-ci.org/ufoscout/go-up)
 [![codecov](https://codecov.io/gh/ufoscout/go-up/branch/master/graph/badge.svg)](https://codecov.io/gh/ufoscout/go-up)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ufoscout/go-up)](https://goreportcard.com/report/github.com/ufoscout/go-up)
 
 go-up provides a simple way to configure an application from multiple sources — built in resources, property files, environment variables, and whatever else you like.
 
