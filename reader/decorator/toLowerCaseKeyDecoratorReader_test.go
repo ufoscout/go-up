@@ -1,9 +1,9 @@
 package decorator
 
 import (
-	"testing"
-	"github.com/ufoscout/go-up/reader"
 	"github.com/stretchr/testify/assert"
+	"github.com/ufoscout/go-up/reader"
+	"testing"
 )
 
 func Test_ShouldLowerCaseTheKeys(t *testing.T) {
@@ -14,11 +14,10 @@ func Test_ShouldLowerCaseTheKeys(t *testing.T) {
 	properties.Add("key.three", "value.three")
 
 	lower := &ToLowerCaseKeyDecoratorReader{properties}
-	lowerProp,_ := lower.Read()
+	lowerProp, _ := lower.Read()
 
-	assert.Equal(t, "ENV_ONE" , lowerProp["key_one"].Value )
-	assert.Equal(t, "VALUE_TWO." , lowerProp["key.two"].Value )
-	assert.Equal(t, "value.three" , lowerProp["key.three"].Value )
+	assert.Equal(t, "ENV_ONE", lowerProp["key_one"].Value)
+	assert.Equal(t, "VALUE_TWO.", lowerProp["key.two"].Value)
+	assert.Equal(t, "value.three", lowerProp["key.three"].Value)
 
 }
-

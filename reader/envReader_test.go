@@ -1,15 +1,15 @@
 package reader
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
 	"os"
+	"testing"
 )
 
 func Test_ShouldReturnUnresolvableEntries(t *testing.T) {
 
 	var reader Reader = &EnvReader{""}
-	prop, err := reader.Read();
+	prop, err := reader.Read()
 	assert.NotNil(t, prop)
 	assert.Nil(t, err)
 
@@ -28,7 +28,7 @@ func Test_ShouldReturnFilteredByPrefix(t *testing.T) {
 	os.Setenv("OTHER_PREFIX_CUSTOM", "300")
 
 	var reader Reader = &EnvReader{"PREFIX_"}
-	prop, _ := reader.Read();
+	prop, _ := reader.Read()
 
 	custom, customFound := prop["CUSTOM"]
 	assert.True(t, customFound)
@@ -43,7 +43,7 @@ func Test_ShouldIdentifyValuesWithEqualsSign(t *testing.T) {
 	os.Setenv("CUSTOM", "key=value")
 
 	var reader Reader = &EnvReader{""}
-	prop, _ := reader.Read();
+	prop, _ := reader.Read()
 
 	custom, customFound := prop["CUSTOM"]
 	assert.True(t, customFound)

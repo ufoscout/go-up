@@ -5,11 +5,11 @@ import "strings"
 /*
 HasTokens returns true if the input contains at least one token
 delimited by startDelimiter and endDelimiter
- */
+*/
 func HasTokens(input string, startDelimiter string, endDelimiter string) bool {
 	start := strings.Index(input, startDelimiter)
 	end := strings.LastIndex(input, endDelimiter)
-	return start >= 0 && end >= start;
+	return start >= 0 && end >= start
 }
 
 /*
@@ -22,7 +22,7 @@ FirstToken returns the first token delimited by the startDelimiter and endDelimi
  - input = "${abcd}" -> "abcd"
  - input = "${${${abcd}}}" -> "abcd"
  - input = "aaa${abcd}aaa${efgh}" -> "abcd"
- */
+*/
 func FirstToken(input string, startDelimiter string, endDelimiter string) *string {
 	if HasTokens(input, startDelimiter, endDelimiter) {
 		for strings.Contains(input, startDelimiter) {
@@ -54,16 +54,16 @@ func FirstToken(input string, startDelimiter string, endDelimiter string) *strin
 func AllTokens(input string, startDelimiter string, endDelimiter string) []string {
 	tokens := []string{}
 
-	token := FirstToken(input, startDelimiter, endDelimiter);
+	token := FirstToken(input, startDelimiter, endDelimiter)
 	for token != nil {
 		tokenValue := *token
 		tokens = append(tokens, tokenValue)
 		index := strings.Index(input, tokenValue) + len(tokenValue) + len(endDelimiter)
 		input = input[index:]
-		token = FirstToken(input, startDelimiter, endDelimiter);
+		token = FirstToken(input, startDelimiter, endDelimiter)
 	}
 
-	return tokens;
+	return tokens
 }
 
 /**
@@ -86,11 +86,11 @@ func AllTokens(input string, startDelimiter string, endDelimiter string) []strin
  * @return
  */
 func AllTokensDistinct(input string, startDelimiter string, endDelimiter string, distinct bool) []string {
-	tokens := AllTokens(input, startDelimiter, endDelimiter);
+	tokens := AllTokens(input, startDelimiter, endDelimiter)
 	if distinct {
 		return unique(tokens)
 	}
-	return tokens;
+	return tokens
 }
 
 func unique(slice []string) []string {
