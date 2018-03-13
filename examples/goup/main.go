@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/ufoscout/go-up"
+	go_up "github.com/ufoscout/go-up"
 )
 
 func main() {

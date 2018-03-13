@@ -39,18 +39,16 @@ func FirstToken(input string, startDelimiter string, endDelimiter string) *strin
 	return nil
 }
 
-/**
- * AllTokens returns all tokens delimited by the startDelimiter and endDelimiter.
- * Example:
- * startDelimiter = "${"
- * endDelimiter = "}"
- *
- * - input = "abcd" -> {}
- * - input = "${abcd}" -> {"abcd"}
- * - input = "${${${abcd}}}" -> {"abcd"}
- * - input = "aaa${abcd}aaa${efgh}" -> {"abcd","efgh"}
- *
- */
+/*
+ AllTokens returns all tokens delimited by the startDelimiter and endDelimiter.
+ Example:
+ startDelimiter = "${"
+ endDelimiter = "}"
+  - input = "abcd" -> {}
+  - input = "${abcd}" -> {"abcd"}
+  - input = "${${${abcd}}}" -> {"abcd"}
+  - input = "aaa${abcd}aaa${efgh}" -> {"abcd","efgh"}
+*/
 func AllTokens(input string, startDelimiter string, endDelimiter string) []string {
 	tokens := []string{}
 
@@ -66,25 +64,18 @@ func AllTokens(input string, startDelimiter string, endDelimiter string) []strin
 	return tokens
 }
 
-/**
- * AllTokensDistinct returne all tokens delimited by the startDelimiter and endDelimiter.
- * If distinct is true, it removes duplicated tokens.
- * Example:
- * startDelimiter = "${"
- * endDelimiter = "}"
- * distinc = true
- *
- * - input = "abcd" -> {}
- * - input = "${abcd}" -> {"abcd"}
- * - input = "${${${abcd}${abcd}}}" -> {"abcd"}
- * - input = "__${abcd}__${efgh}__${abcd}" -> {"abcd","efgh"}
- *
- * @param input
- * @param startDelimiter
- * @param endDelimiter
- * @param distinct whether to strip duplicated tokens
- * @return
- */
+/*
+ AllTokensDistinct returne all tokens delimited by the startDelimiter and endDelimiter.
+ If distinct is true, it removes duplicated tokens.
+ Example:
+ startDelimiter = "${"
+ endDelimiter = "}"
+ distinc = true
+  - input = "abcd" -> {}
+  - input = "${abcd}" -> {"abcd"}
+  - input = "${${${abcd}${abcd}}}" -> {"abcd"}
+  - input = "__${abcd}__${efgh}__${abcd}" -> {"abcd","efgh"}
+*/
 func AllTokensDistinct(input string, startDelimiter string, endDelimiter string, distinct bool) []string {
 	tokens := AllTokens(input, startDelimiter, endDelimiter)
 	if distinct {

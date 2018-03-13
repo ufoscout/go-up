@@ -1,4 +1,4 @@
-package go_up
+package goup
 
 import (
 	"os"
