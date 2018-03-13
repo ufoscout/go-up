@@ -40,7 +40,7 @@ func FirstToken(input string, startDelimiter string, endDelimiter string) *strin
 }
 
 /*
- AllTokens returns all tokens delimited by the startDelimiter and endDelimiter.
+AllTokens returns all tokens delimited by the startDelimiter and endDelimiter.
  Example:
  startDelimiter = "${"
  endDelimiter = "}"
@@ -65,7 +65,7 @@ func AllTokens(input string, startDelimiter string, endDelimiter string) []strin
 }
 
 /*
- AllTokensDistinct returne all tokens delimited by the startDelimiter and endDelimiter.
+AllTokensDistinct returne all tokens delimited by the startDelimiter and endDelimiter.
  If distinct is true, it removes duplicated tokens.
  Example:
  startDelimiter = "${"
