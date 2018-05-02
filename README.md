@@ -30,12 +30,17 @@ import (
 )
 ```
 
-In your Gopkg.toml file (if you are using [dep](https://github.com/golang/dep), if not, you should):
+If you use VGO, add in your go.mod file:
+```
+require github.com/ufoscout/go-up v0.5.0
+```
+
+If you use [dep](https://github.com/golang/dep), add in your Gopkg.toml file:
 ```Toml
 # Use latest release of go-up
 [[constraint]]
   name = "github.com/ufoscout/go-up"
-  version = "0.4.0"
+  version = "v0.5.0"
 ```
 
 2. Define some properties. You can use placeholders, for example, in `config.properties`:
