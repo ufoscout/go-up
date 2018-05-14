@@ -64,7 +64,7 @@ Keys and values in a properties file are automatically trimmed.
 ignoreFileNotFound := false 
 up, err := NewGoUp().
 		AddFile("./confing.properties", ignoreFileNotFound).
-		build();
+		Build();
 ```
 
 
