@@ -236,15 +236,6 @@ A typical real life configuration would look like:
 ```Go
 up, err := go_up.NewGoUp().
 
- // Load the Environment variables.
- // The are used as they are defined, e.g. ENV_VARIABLE=XXX
- AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", false, false), go_up.HighestPriority).
-
- // Load the Environment variables and convert their keys
- // from ENV_VARIABLE=XXX to env.variable=XXX
- // This could be desired to override default properties
- AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", true, true), go_up.HighestPriority).
-
  // load a file
  AddFile("./default.properties", false).
 
@@ -255,6 +246,15 @@ up, err := go_up.NewGoUp().
  // Here I am adding properties requried only during testing.
  AddFile("./test/test.properties", true).
 
+ // Load the Environment variables.
+ // The are used as they are defined, e.g. ENV_VARIABLE=XXX
+ AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", false, false)).
+
+ // Load the Environment variables and convert their keys
+ // from ENV_VARIABLE=XXX to env.variable=XXX
+ // This could be desired to override default properties
+ AddReaderWithPriority(go_up.NewEnvReader("APP_PREFIX_", true, true)).
+ 
  // build the go-up object
  .Build()
 ```
