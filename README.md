@@ -327,10 +327,10 @@ When built, they produce surprising results:
 
 | Library       | Produced Binary Size |
 | ------------- |---------------------:|
-| Plain Go      |             2.050 KB |
-| Go-Up         |             2.200 KB |
-| Viper         |            10.500 KB |
+| Plain Go      |             2.000 KB |
+| Go-Up         |             2.185 KB |
+| Viper         |            11.782 KB |
 
-<ins>The Viper based binary file is 5 times bigger than the other implementations!</ins>
+<ins>The Viper based binary file is nearly 6 times bigger than the other implementations!</ins>
 
-(Build performed with go1.10 linux/amd64 on Ubuntu 16.04)
+(Build performed with go1.12 linux/amd64 on Ubuntu 18.04)
