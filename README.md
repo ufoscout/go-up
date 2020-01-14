@@ -32,7 +32,7 @@ import (
 
 If you use VGO, add in your go.mod file:
 ```
-require github.com/ufoscout/go-up v0.6.0
+require github.com/ufoscout/go-up v0.6.1
 ```
 
 
@@ -317,20 +317,20 @@ Viper is great and I surely recommend it; nevertheless, all of its features are 
 
 So, if like me you aspire to code which is as light as possible and you can live with a smaller set of features (BWT go-up has some unique aces in the hole like recursive placeholders resolution!), then you should probably take into account a lighter alternative like go-up.
 
-To show the impact that a single library can have on your application, I created three small examples (check them in the "examples" folder), these are:
+To show the impact that a single library can have on your application, I created three small examples (see: [go-up_examples](https://github.com/ufoscout/go-up_examples) ), these are:
 
-- *plain* : a Go application that prints "Hello World"
 - *goup* : a Go application that, using **go-up**, reads "Hello World" from a config file and prints it
+- *plain* : a Go application that prints "Hello World"
 - *viper* : a Go application that, using **viper**, reads "Hello World" from a config file and prints it
 
 When built, they produce surprising results:
 
 | Library       | Produced Binary Size |
 | ------------- |---------------------:|
-| Plain Go      |             2.000 KB |
 | Go-Up         |             2.185 KB |
+| Plain Go      |             2.000 KB |
 | Viper         |            11.782 KB |
 
 <ins>The Viper based binary file is nearly 6 times bigger than the other implementations!</ins>
 
-(Build performed with go1.12 linux/amd64 on Ubuntu 18.04)
+(Build performed with go1.13 linux/amd64 on Ubuntu 18.04)
